@@ -19,6 +19,6 @@ if stream:
         os.makedirs(output_path)
 
     stream.download(output_path=output_path)
-    print("Скачивание завершено")
+    print("Скачивание завершено ")
 else:
-    print("Невозможно скачать видео с этим тэгом")
+    print("Невозможно скачать видео с этим тэгом ")
