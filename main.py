@@ -1,24 +1,42 @@
-import os
 from pytubefix import YouTube
 
 link = input("введите ссылку на видео, которое хочтите скачать: ")
 yt = YouTube(link)
-available_streams = yt.streams.filter(file_extension='mp4')
-print("Доступные варианты: ")
-for stream in available_streams:
-    resolution = stream.resolution if stream.resolution else "audio only"
-    fps = f", fps: {stream.fps}" if hasattr(stream, 'fps') else ""
-    print(f"itag: {stream.itag}, resolution: {resolution}{fps}, type: {stream.mime_type}")
+available_streams = yt.streams
 
-itag_value = int(input("Введите номер тэга для нужного качества видео: "))
-stream = yt.streams.get_by_itag(itag_value)
+video_qualities = set()
+for s in available_streams.filter(mime_type='video/mp4'):
+    if s.resolution == None:
+        continue
+    video_qualities.add(s.resolution)
 
-if stream:
-    output_path = 'C:/Users/destr/Downloads'
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
+video_qualities = sorted(video_qualities)
+print(", ".join(video_qualities[1:])+',', video_qualities[0])
+video_quality = input('Выберите качество для видео: ')
 
-    stream.download(output_path=output_path)
-    print("Скачивание завершено")
-else:
-    print("Невозможно скачать видео с этим тэгом")
+if video_quality[-1] != 'p' or video_quality[-1].isdigit:
+    video_quality += 'p'
+if video_quality not in video_qualities:
+    print('Выбрано недопустимое качество видео')
+
+# отдельно скачиваются видео-файл и аудио-файл (стоит разобраться как они друг с другом взаимодействуют, какими бывают, в чём отличия)
+# нужно выбрать видео и аудио файлы с правильным качеством и в правильном формате
+
+video = available_streams.filter(resolution= video_quality, mime_type='"video/mp4"')
+print(video)
+
+audio_qualities = set()
+for track in available_streams.filter(mime_type= 'audio/mp4'):
+    print(track.abr)
+    audio_qualities.add(track.abr)
+audio_quality = input('Выберите качество звука: ')
+
+if audio_quality[-1].isdigit():
+    audio_quality += 'kbps'
+if audio_quality not in audio_qualities:
+    print('Выбрано недопустимое качество звука')
+    
+audio = available_streams.filter(abr=audio_quality, mime_type= 'audio/mp4')
+print(audio)
+
+# два файла объединяются в один полноценный файл, который сохраняется у пользователя
