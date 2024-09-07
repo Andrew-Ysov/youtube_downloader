@@ -1,4 +1,6 @@
 from pytubefix import YouTube
+from moviepy.editor import VideoFileClip, AudioFileClip
+import os
 
 link = input("введите ссылку на видео, которое хочтите скачать: ")
 yt = YouTube(link)
@@ -24,7 +26,6 @@ def download_video(available_streams, path):
         print('Выбрано недопустимое качество видео')
 
     video = available_streams.filter(resolution= video_quality, mime_type='video/mp4').first()
-    print(video)
 
     video.download(output_path= path, filename=f'video of {video.title}.mp4', )
 
@@ -50,8 +51,20 @@ def download_audio(available_streams, path):
     audio_name = f'audio of {audio.title} .mp4'
     return audio_name
 
-def concatinate_video_and_audio():
-    pass
+def concatinate_video_and_audio(v_name, a_name, path):
+
+    v_path = (path + '/' + v_name)
+    a_path = (path + '/' + a_name)
+    full = (path + '/' + v_name[9:])
+
+    video_clip = VideoFileClip(v_path)
+    audio_clip = AudioFileClip(a_path)
+
+    video_clip.audio = audio_clip
+    video_clip.write_videofile(full)
+
+    os.remove(path + '/' + a_name)
+    os.remove(path + '/' + v_name)
 
 type_of_content = input('Введите 1, если хотите скачать только видео, 2- только аудио, \n'
       'что-угодно или ничего, если хотите скачать и видео и аудио: ')
@@ -63,6 +76,4 @@ elif type_of_content == str('2'):
 else:
     video_name = download_video(available_streams, download_to)
     audio_name = download_audio(available_streams, download_to)
-    concatinate_video_and_audio()
-# два файла объединяются в один полноценный файл, который сохраняется у пользователя
-# а два старых файла нужно удалить
+    concatinate_video_and_audio(video_name, audio_name, download_to)
