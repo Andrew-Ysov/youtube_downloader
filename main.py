@@ -1,11 +1,11 @@
 from pytubefix import YouTube
 from moviepy.editor import VideoFileClip, AudioFileClip
 import os
+from important_vars import download_to
 
 link = input("введите ссылку на видео, которое хочтите скачать: ")
 yt = YouTube(link)
 available_streams = yt.streams
-download_to = 'C:/Users/destr/Downloads'
 
 def download_video(available_streams, path):
     video_qualities = set()
