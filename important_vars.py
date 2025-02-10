@@ -1,8 +1,8 @@
-''' Переменная обозначает путь до места, куда будут скачиваться видео '''
+''' Переменная DOWNLOAD_TO обозначает путь до места, куда будут скачиваться видео '''
 
 
 def main():
-  download_to = 'C:/Users/destr/Downloads'
+  DOWNLOAD_TO = 'C:/Users/destr/Downloads'
 
 if __name__ == '__main__':
   main()
