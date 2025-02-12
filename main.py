@@ -66,14 +66,19 @@ def concatinate_video_and_audio(v_name, a_name, path):
     os.remove(path + '/' + a_name)
     os.remove(path + '/' + v_name)
 
-type_of_content = input('Введите 1, если хотите скачать только видео, 2- только аудио, \n'
-      'что-угодно или ничего, если хотите скачать и видео и аудио: ')
+def main(available_streams, download_to):
+    type_of_content = input('Введите 1, если хотите скачать только видео, 2- только аудио, \n'
+        'что-угодно или ничего, если хотите скачать и видео и аудио: ')
 
-if type_of_content == str('1'):
-    download_video(available_streams, download_to)
-elif type_of_content == str('2'):
-    download_audio(available_streams, download_to)
-else:
-    video_name = download_video(available_streams, download_to)
-    audio_name = download_audio(available_streams, download_to)
-    concatinate_video_and_audio(video_name, audio_name, download_to)
+    if type_of_content == str('1'):
+        download_video(available_streams, download_to)
+    elif type_of_content == str('2'):
+        download_audio(available_streams, download_to)
+    else:
+        video_name = download_video(available_streams, download_to)
+        audio_name = download_audio(available_streams, download_to)
+        concatinate_video_and_audio(video_name, audio_name, download_to)
+
+
+if __name__ == '__main__':
+    main(available_streams, download_to)
