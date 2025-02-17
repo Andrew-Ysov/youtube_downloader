@@ -1,6 +1,7 @@
+import os
 from pytubefix import YouTube
 from moviepy.editor import VideoFileClip, AudioFileClip
-import os
+
 from important_vars import DOWNLOAD_TO
 
 
@@ -8,16 +9,21 @@ link = input("введите ссылку на видео, которое хоч
 yt = YouTube(link)
 available_streams = yt.streams
 
+
 def download_video(available_streams, path):
+
     video_qualities = set()
+
     for s in available_streams.filter(mime_type='video/mp4'):
         if s.resolution == None:
             continue
         video_qualities.add(int(s.resolution[:-1]))
 
     video_qualities = sorted(video_qualities)
+
     for i,v in enumerate(video_qualities):
         video_qualities[i] = str(v) + 'p'
+
     print(video_qualities)
     video_quality = input('Выберите качество для видео: ')
 
@@ -33,8 +39,11 @@ def download_video(available_streams, path):
     video_name = f'video of {video.title}.mp4'
     return video_name
 
+
 def download_audio(available_streams, path):
+
     audio_qualities = set()
+
     for track in available_streams.filter(mime_type= 'audio/mp4'):
         print(track.abr)
         audio_qualities.add(track.abr)
@@ -52,6 +61,7 @@ def download_audio(available_streams, path):
     audio_name = f'audio of {audio.title} .mp4'
     return audio_name
 
+
 def concatinate_video_and_audio(v_name, a_name, path):
 
     v_path = (path + '/' + v_name)
@@ -67,8 +77,10 @@ def concatinate_video_and_audio(v_name, a_name, path):
     os.remove(path + '/' + a_name)
     os.remove(path + '/' + v_name)
 
+
 def main(available_streams, download_to):
-    type_of_content = input('Введите 1, если хотите скачать только видео, 2- только аудио, \n'
+    type_of_content = input(
+        'Введите 1, если хотите скачать только видео, 2- только аудио, \n'
         'что-угодно или ничего, если хотите скачать и видео и аудио: ')
 
     if type_of_content == str('1'):
@@ -82,4 +94,4 @@ def main(available_streams, download_to):
 
 
 if __name__ == '__main__':
-    main(available_streams, download_to)
+    main(available_streams, DOWNLOAD_TO)
