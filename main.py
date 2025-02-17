@@ -1,7 +1,8 @@
 from pytubefix import YouTube
 from moviepy.editor import VideoFileClip, AudioFileClip
 import os
-from important_vars import download_to
+from important_vars import DOWNLOAD_TO
+
 
 link = input("введите ссылку на видео, которое хочтите скачать: ")
 yt = YouTube(link)
