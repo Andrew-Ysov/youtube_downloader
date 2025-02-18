@@ -5,7 +5,7 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 from important_vars import DOWNLOAD_TO
 
 
-link = input("введите ссылку на видео, которое хочтите скачать: ")
+link = input('введите ссылку на видео, которое хочтите скачать: ')
 yt = YouTube(link)
 available_streams = yt.streams
 
