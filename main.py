@@ -32,9 +32,9 @@ def download_video(available_streams, path):
     if video_quality not in video_qualities:
         print('Выбрано недопустимое качество видео')
 
-    video = available_streams.filter(resolution= video_quality, mime_type='video/mp4').first()
+    video = available_streams.filter(resolution=video_quality, mime_type='video/mp4').first()
 
-    video.download(output_path= path, filename=f'video of {video.title}.mp4', )
+    video.download(output_path=path, filename=f'video of {video.title}.mp4',)
 
     video_name = f'video of {video.title}.mp4'
     return video_name
@@ -44,7 +44,7 @@ def download_audio(available_streams, path):
 
     audio_qualities = set()
 
-    for track in available_streams.filter(mime_type= 'audio/mp4'):
+    for track in available_streams.filter(mime_type='audio/mp4'):
         print(track.abr)
         audio_qualities.add(track.abr)
     audio_quality = input('Выберите качество звука: ')
@@ -54,9 +54,9 @@ def download_audio(available_streams, path):
     if audio_quality not in audio_qualities:
         print('Выбрано недопустимое качество звука')
         
-    audio = available_streams.filter(abr=audio_quality, mime_type= 'audio/mp4').first()
+    audio = available_streams.filter(abr=audio_quality, mime_type='audio/mp4').first()
 
-    audio.download(output_path= path, filename=f'audio of {audio.title} .mp4')
+    audio.download(output_path=path, filename=f'audio of {audio.title} .mp4')
     
     audio_name = f'audio of {audio.title} .mp4'
     return audio_name
