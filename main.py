@@ -15,7 +15,7 @@ def download_video(available_streams, path):
     video_qualities = set()
 
     for s in available_streams.filter(mime_type='video/mp4'):
-        if s.resolution == None:
+        if s.resolution is None:
             continue
         video_qualities.add(int(s.resolution[:-1]))
 
