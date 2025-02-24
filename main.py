@@ -63,6 +63,7 @@ def download_audio(available_streams, path):
 
 
 def concatinate_video_and_audio(v_name, a_name, path):
+    """Creates new file from audio and video."""
 
     v_path = (path + '/' + v_name)
     a_path = (path + '/' + a_name)
@@ -79,6 +80,7 @@ def concatinate_video_and_audio(v_name, a_name, path):
 
 
 def main(available_streams, download_to):
+    """Main menu, where user chooses what to download."""
     type_of_content = input(
         'Введите 1, если хотите скачать только видео, 2- только аудио, \n'
         'что-угодно или ничего, если хотите скачать и видео и аудио: ')
