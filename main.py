@@ -1,7 +1,6 @@
 import os
 from pytubefix import YouTube
-from moviepy.editor import VideoFileClip, AudioFileClip
-
+from moviepy import *
 from important_vars import DOWNLOAD_TO
 
 
